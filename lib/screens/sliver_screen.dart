@@ -19,14 +19,21 @@ class SliverScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           _sliverAppBar(),
-          _sliverPersistentHeader(),
+          _sliverPersistentHeader(title: 'sliverToBoxAdapter'),
           _sliverToBoxAdapter(),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            sliver: _sliverToBoxAdapter(),
+          ),
+          _sliverPersistentHeader(title: 'sliverList'),
           _sliverList(),
-          _sliverPersistentHeader(),
+          _sliverPersistentHeader(title: 'sliverBuilderList'),
           _sliverBuilderList(),
-          _sliverPersistentHeader(),
+          _sliverPersistentHeader(title: 'sliverFixedExtentList'),
+          _sliverFixedExtentList(),
+          _sliverPersistentHeader(title: 'sliverGrid'),
           _sliverGrid(),
-          _sliverPersistentHeader(),
+          _sliverPersistentHeader(title: 'sliverBuilderGrid'),
           _sliverBuilderGrid(),
         ],
       ),
@@ -53,13 +60,13 @@ class SliverScreen extends StatelessWidget {
     );
   }
 
-  SliverPersistentHeader _sliverPersistentHeader() {
+  SliverPersistentHeader _sliverPersistentHeader({String? title}) {
     return SliverPersistentHeader(
       pinned: true,
       delegate: SliverFixedHeaderDelegate(
         child: Container(
           color: Colors.yellow,
-          child: Center(child: Text('SliverPersistentHeader')),
+          child: Center(child: Text('SliverPersistentHeader $title')),
         ),
         maxHeight: 200,
         minHeight: 50,
@@ -78,8 +85,10 @@ class SliverScreen extends StatelessWidget {
     );
   }
 
+  // SliverChildListDelegate ==> 한번에 그림
+  // SliverChildBuilderDelegate ==> 많은수 스크롤 할때 그려짐(보이는 것만 그림)
   SliverList _sliverList() {
-    final List<int> numbers = List.generate(5, (index) => index);
+    final List<int> numbers = List.generate(25, (index) => index);
     return SliverList(
       delegate: SliverChildListDelegate(
         numbers
@@ -104,6 +113,18 @@ class SliverScreen extends StatelessWidget {
           );
         },
         childCount: 5,
+      ),
+    );
+  }
+
+  SliverFixedExtentList _sliverFixedExtentList() {
+    return SliverFixedExtentList(
+      itemExtent: 100,
+      delegate: SliverChildBuilderDelegate(
+        childCount: 10,
+        (context, index) {
+          return CardWidget(index: index);
+        },
       ),
     );
   }
