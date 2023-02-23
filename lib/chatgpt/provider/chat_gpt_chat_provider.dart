@@ -30,6 +30,35 @@ Future<List<ChatModel>> chatGptChat(ChatGptChatRef ref,
 
 final chatModelsProvider = StateProvider<List<ChatModel>>((ref) => []);
 
+@riverpod
+class NewChatModel extends _$NewChatModel {
+  @override
+  FutureOr<List<ChatModel>> build() async {
+    return [];
+  }
+
+  Future<void> addGptChatModel(
+      {required String model, required String message, int? max_tokens}) async {
+    //state = AsyncValue.loading();
+    final repository = ref.watch(chatGptRepositoryProvider);
+    MessageBody messageBody =
+        MessageBody(model: model, prompt: message, max_tokens: max_tokens);
+
+    final chat = await repository.getChat(messageBody);
+
+    //chatgpt 주는것
+    final chatModels = chat.choices!
+        .map((choise) => ChatModel(msg: choise.text!, chatIndex: 1))
+        .toList();
+
+    state = AsyncValue.data([...state.value!, ...chatModels]);
+  }
+
+  Future<void> addUserChatModel({required ChatModel chatModel}) async {
+    state = AsyncValue.data([...state.value!, chatModel]);
+  }
+}
+
 class ChatModel {
   final String msg;
   final int chatIndex;

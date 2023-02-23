@@ -6,6 +6,21 @@ part of 'chat_gpt_chat_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$newChatModelHash() => r'ce0b72a110e8bf264109ae3b99270d380561e813';
+
+/// See also [NewChatModel].
+@ProviderFor(NewChatModel)
+final newChatModelProvider =
+    AutoDisposeAsyncNotifierProvider<NewChatModel, List<ChatModel>>.internal(
+  NewChatModel.new,
+  name: r'newChatModelProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$newChatModelHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$NewChatModel = AutoDisposeAsyncNotifier<List<ChatModel>>;
 String _$chatGptChatHash() => r'e33646b1afd18fe8d0fe2285bfd7a66507b814bf';
 
 /// Copied from Dart SDK

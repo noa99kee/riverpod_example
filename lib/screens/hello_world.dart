@@ -111,7 +111,7 @@ class News extends _$News {
   Future<void> addNewsItem({required NewsItem newsItem}) async {
     state = AsyncValue.loading();
     await Future.delayed(Duration(seconds: 1));
-    //아주 중요함
+    //아주 중요함 (다른 비동기 처리 결과를 가져와서 담을 수도 있겠다.)
     state = AsyncValue.data([...state.value!, newsItem]);
   }
 }
@@ -303,6 +303,7 @@ class _HelloWorldState extends ConsumerState<HelloWorld> {
                 ref.invalidate(cityProvider);
                 ref.invalidate(weatherProvider);
                 ref.invalidate(currentUserProvider);
+                ref.invalidate(newsProvider);
               },
               child: Text('Reset Provider'))
         ]),

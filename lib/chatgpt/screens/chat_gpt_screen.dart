@@ -115,97 +115,100 @@ class _ChatGptScreenState extends ConsumerState<ChatGptScreen> {
         ),
       ),
       body: SafeArea(
-          child: Stack(
-        children: [
-          Center(
-            child: Opacity(
-              opacity: 1,
-              child: Lottie.network(
-                  'https://assets7.lottiefiles.com/packages/lf20_p5yomfw6.json'),
+        child: Stack(
+          children: [
+            Center(
+              child: Opacity(
+                opacity: 1,
+                child: Lottie.network(
+                    'https://assets7.lottiefiles.com/packages/lf20_p5yomfw6.json'),
+              ),
             ),
-          ),
-          Column(
-            children: [
-              Flexible(child: Consumer(
-                builder: (BuildContext context, WidgetRef ref, Widget? child) {
-                  final chatModels = ref.watch(chatModelsProvider);
+            Column(
+              children: [
+                Flexible(child: Consumer(
+                  builder:
+                      (BuildContext context, WidgetRef ref, Widget? child) {
+                    ref.listen(newChatModelProvider, (previous, next) {
+                      if (previous != next) {
+                        setState(() {
+                          _isLoading = false;
+                        });
+                      }
+                    });
 
-                  ref.listen(chatModelsProvider, (previous, next) {
-                    if (previous != next) {
-                      setState(() {
-                        _isLoading = false;
-                      });
-                    }
-                  });
-
-                  return ListView.builder(
-                      controller: _listScrollController,
-                      itemCount: chatModels.length,
-                      itemBuilder: (context, index) {
-                        final chatModel = chatModels[index];
-                        return ChatWidget(
-                          msg: chatModel.msg,
-                          chatIndex: chatModel.chatIndex,
+                    final chatModels = ref.watch(newChatModelProvider);
+                    return chatModels.when(
+                      data: (chatModels) {
+                        return ListView.builder(
+                          controller: _listScrollController,
+                          itemCount: chatModels.length,
+                          itemBuilder: (context, index) {
+                            final chatModel = chatModels[index];
+                            return ChatWidget(
+                              msg: chatModel.msg,
+                              chatIndex: chatModel.chatIndex,
+                            );
+                          },
                         );
-                      });
-                },
-              )),
-              if (_isTyping) ...[
-                const SpinKitThreeBounce(
-                  color: Colors.white,
-                  size: 18,
+                      },
+                      error: (error, stackTrace) => Text(error.toString()),
+                      loading: () => SizedBox.shrink(),
+                    );
+                  },
+                )),
+                if (_isTyping) ...[
+                  const SpinKitThreeBounce(
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ],
+                SizedBox(
+                  height: 15,
                 ),
-              ],
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Visibility(
-                  visible: _isLoading,
-                  child: Opacity(
-                    opacity: 0.5,
-                    child: Lottie.network(
-                      'https://assets7.lottiefiles.com/packages/lf20_p8bfn5to.json',
+                Material(
+                  color: cardColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            focusNode: focusNode,
+                            style: const TextStyle(color: Colors.white),
+                            controller: textEditingController,
+                            onSubmitted: (value) async {
+                              await sendMessageFCT();
+                            },
+                            decoration: const InputDecoration.collapsed(
+                                hintText: "How can I help you?",
+                                hintStyle: TextStyle(color: Colors.grey)),
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: () async {
+                              await sendMessageFCT();
+                            },
+                            icon: const Icon(
+                              Icons.send_rounded,
+                              color: Colors.white,
+                            ))
+                      ],
                     ),
                   ),
                 ),
+              ],
+            ),
+            Center(
+              child: Visibility(
+                visible: _isLoading,
+                child: Lottie.network(
+                    'https://assets10.lottiefiles.com/packages/lf20_usmfx6bp.json'),
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Material(
-                color: cardColor,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          focusNode: focusNode,
-                          style: const TextStyle(color: Colors.white),
-                          controller: textEditingController,
-                          onSubmitted: (value) async {
-                            await sendMessageFCT();
-                          },
-                          decoration: const InputDecoration.collapsed(
-                              hintText: "How can I help you?",
-                              hintStyle: TextStyle(color: Colors.grey)),
-                        ),
-                      ),
-                      IconButton(
-                          onPressed: () async {
-                            await sendMessageFCT();
-                          },
-                          icon: const Icon(
-                            Icons.send_rounded,
-                            color: Colors.white,
-                          ))
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -246,19 +249,19 @@ class _ChatGptScreenState extends ConsumerState<ChatGptScreen> {
 
         final userChatModel = ChatModel(msg: msg, chatIndex: 0);
 
-        ref.watch(chatModelsProvider.notifier).state = [
-          ...ref.watch(chatModelsProvider.notifier).state,
-          userChatModel
-        ];
+        ref
+            .read(newChatModelProvider.notifier)
+            .addUserChatModel(chatModel: userChatModel);
 
         textEditingController.clear();
         focusNode.unfocus();
       });
 
-      ref.read(chatGptChatProvider(
+      ref.read(newChatModelProvider.notifier).addGptChatModel(
           message: msg,
           model: ref.watch(currentModelProvider),
-          max_tokens: 300));
+          max_tokens: 300);
+
       setState(() {
         _isLoading = true;
       });
