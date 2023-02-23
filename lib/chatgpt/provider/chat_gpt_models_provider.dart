@@ -4,7 +4,7 @@ import 'package:riverpod_examples/chatgpt/repository/chat_gpt_repository.dart';
 
 part 'chat_gpt_models_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<ChatGptModelResult> chatGptModels(ChatGptModelsRef ref) async {
   final repository = ref.watch(chatGptRepositoryProvider);
   final modelsResult = await repository.getModels();

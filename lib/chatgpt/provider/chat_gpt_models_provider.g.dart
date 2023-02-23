@@ -20,12 +20,11 @@ final currentModelProvider = NotifierProvider<CurrentModel, String>.internal(
 );
 
 typedef _$CurrentModel = Notifier<String>;
-String _$chatGptModelsHash() => r'c05338d7a03b40d7be2337a79027e0c7cfc64c6b';
+String _$chatGptModelsHash() => r'a89c77ce987967879442a1b328caabf104fb1ec7';
 
 /// See also [chatGptModels].
 @ProviderFor(chatGptModels)
-final chatGptModelsProvider =
-    AutoDisposeFutureProvider<ChatGptModelResult>.internal(
+final chatGptModelsProvider = FutureProvider<ChatGptModelResult>.internal(
   chatGptModels,
   name: r'chatGptModelsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -35,5 +34,5 @@ final chatGptModelsProvider =
   allTransitiveDependencies: null,
 );
 
-typedef ChatGptModelsRef = AutoDisposeFutureProviderRef<ChatGptModelResult>;
+typedef ChatGptModelsRef = FutureProviderRef<ChatGptModelResult>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

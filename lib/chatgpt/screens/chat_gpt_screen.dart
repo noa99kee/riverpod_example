@@ -160,8 +160,11 @@ class _ChatGptScreenState extends ConsumerState<ChatGptScreen> {
                 alignment: Alignment.bottomLeft,
                 child: Visibility(
                   visible: _isLoading,
-                  child: Lottie.network(
-                    'https://assets7.lottiefiles.com/packages/lf20_p8bfn5to.json',
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Lottie.network(
+                      'https://assets7.lottiefiles.com/packages/lf20_p8bfn5to.json',
+                    ),
                   ),
                 ),
               ),

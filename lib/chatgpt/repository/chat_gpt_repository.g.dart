@@ -42,7 +42,7 @@ class _ChatGptRepository implements ChatGptRepository {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
       r'Authorization':
-          'Bearer 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'
+          'Bearer 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'
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
@@ -69,7 +69,7 @@ class _ChatGptRepository implements ChatGptRepository {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
       r'Authorization':
-          'Bearer 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',
+          'Bearer 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',
       r'Content-Type': 'application/json',
     };
     _headers.removeWhere((k, v) => v == null);

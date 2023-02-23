@@ -10,7 +10,7 @@ part 'chat_gpt_repository.g.dart';
 part 'chat_gpt_repository.freezed.dart';
 
 const String BASE_URL = "https://api.openai.com/v1";
-const String API_KEY = "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";
+const String API_KEY = "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";
 
 @Riverpod(keepAlive: true)
 ChatGptRepository chatGptRepository(ChatGptRepositoryRef ref) {
