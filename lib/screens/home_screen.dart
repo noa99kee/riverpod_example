@@ -173,6 +173,15 @@ class HomeScreen extends StatelessWidget {
                     child: Text('sliver'),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.go('/chatgpt');
+                    },
+                    child: Text('chatgpt'),
+                  ),
+                ),
               ],
             ),
           ),

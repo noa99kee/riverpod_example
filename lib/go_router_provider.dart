@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:riverpod_examples/chatgpt/screens/chat_gpt_screen.dart';
 import 'package:riverpod_examples/screens/box_constraint_screen.dart';
 import 'package:riverpod_examples/screens/chat_screen.dart';
 import 'package:riverpod_examples/screens/config_screen.dart';
@@ -131,6 +132,11 @@ GoRouter goRouter(GoRouterRef ref) {
             path: 'sliver',
             pageBuilder: (context, state) =>
                 NoTransitionPage(child: SliverScreen()),
+          ),
+          GoRoute(
+            path: 'chatgpt',
+            pageBuilder: (context, state) =>
+                NoTransitionPage(child: ChatGptScreen()),
           ),
         ],
       ),

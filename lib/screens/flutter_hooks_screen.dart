@@ -8,23 +8,25 @@ class FlutterHooksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('flutter hooks')),
-      body: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        FadeIn(
-            child: Container(
-          width: 100,
-          height: 100,
-          color: Colors.red,
-        )),
-        SizedBox(
-          width: 50,
-        ),
-        FadeInHook(
-            child: Container(
-          width: 100,
-          height: 100,
-          color: Colors.blue,
-        ))
-      ]),
+      body: Center(
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          FadeIn(
+              child: Container(
+            width: 100,
+            height: 100,
+            color: Colors.red,
+          )),
+          SizedBox(
+            width: 50,
+          ),
+          FadeInHook(
+              child: Container(
+            width: 100,
+            height: 100,
+            color: Colors.blue,
+          ))
+        ]),
+      ),
     );
   }
 }
