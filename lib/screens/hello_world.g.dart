@@ -49,6 +49,21 @@ final cityProvider = NotifierProvider<City, String>.internal(
 );
 
 typedef _$City = Notifier<String>;
+String _$newsHash() => r'e8f04c963f72b3da23e258eec716ac2394d2f880';
+
+/// See also [News].
+@ProviderFor(News)
+final newsProvider =
+    AutoDisposeAsyncNotifierProvider<News, List<NewsItem>>.internal(
+  News.new,
+  name: r'newsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$newsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$News = AutoDisposeAsyncNotifier<List<NewsItem>>;
 String _$helloWorldHash() => r'7f57fdab5b7657ecaedc58bd2295a12568172234';
 
 /// See also [helloWorld].
