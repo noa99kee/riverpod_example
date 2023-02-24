@@ -137,7 +137,7 @@ class PostNotifier extends StateNotifier<AsyncValue<Post>> {
       state = AsyncValue.error(e, s);
     }
   */
-    //위와 같은걸 아래와 같이 축약 할수 있다.
+    //위와 같은걸 아래와 같이 축약 할수 있다.  AsyncValue.data + AsyncValue.error
     state = await AsyncValue.guard(() => repository.getPost(id));
   }
 }

@@ -47,6 +47,15 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
+                      context.go('/notifier');
+                    },
+                    child: Text('notifier'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
                       context.go('/page');
                     },
                     child: Text('page (NotifierProvider)'),

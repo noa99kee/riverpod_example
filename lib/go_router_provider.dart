@@ -10,6 +10,7 @@ import 'package:riverpod_examples/screens/home_screen.dart';
 import 'package:riverpod_examples/screens/immutable_todo_screen.dart';
 import 'package:riverpod_examples/screens/job_screen.dart';
 import 'package:riverpod_examples/screens/localization_screen.dart';
+import 'package:riverpod_examples/screens/notifier_screen.dart';
 import 'package:riverpod_examples/screens/page_screen.dart';
 import 'package:riverpod_examples/screens/post_new_screen.dart';
 import 'package:riverpod_examples/screens/post_screen.dart';
@@ -33,6 +34,11 @@ GoRouter goRouter(GoRouterRef ref) {
             path: 'helloworld',
             pageBuilder: (context, state) =>
                 NoTransitionPage(child: HelloWorld()),
+          ),
+          GoRoute(
+            path: 'notifier',
+            pageBuilder: (context, state) =>
+                NoTransitionPage(child: NotifierScreen()),
           ),
           GoRoute(
             path: 'page',
