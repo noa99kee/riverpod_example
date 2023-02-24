@@ -74,7 +74,7 @@ class PageScreen extends ConsumerWidget {
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(ref.watch(pageIndexProvider).toString()),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               PreviousButton(),

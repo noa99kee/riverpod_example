@@ -54,7 +54,7 @@ class _ChatGptScreenState extends ConsumerState<ChatGptScreen> {
       backgroundColor: scaffoldBackgroundColor,
       context: context,
       builder: (context) {
-        return const Padding(
+        return Padding(
           padding: const EdgeInsets.all(18.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
